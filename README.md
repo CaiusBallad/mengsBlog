@@ -3,13 +3,13 @@
 
 # 大分类
 
-## [深入理解JAVA]()
+## [深入理解JAVA](AboutJava.md)
 
 ## [设计模式](DesignPattern.md)
 
-## Linux相关
+## [Linux相关](AboutLinux.md)
 
-## 刷题Tips
+## [刷题Tips](Algorithm.md)
 
 
 # 点滴感想
