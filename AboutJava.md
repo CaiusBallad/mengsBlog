@@ -1,5 +1,15 @@
 # 深入理解JAVA
 
+## Java内存区域与内存溢出
+
+### 内存区域的组成
+![内存区域的组成](pictures/memory1.jpg)
+
+### 对象相关过程
+![对象相关过程](pictures/memory2.jpg)
+
+### 内存溢出
+![内存溢出](pictures/memory3.jpg)
 ## 重点数据结构
 
 ### ArrayList
