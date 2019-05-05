@@ -1,5 +1,5 @@
 # mengsBlog
-> This is my blog created before my graduation
+> This is my blog for summary
 
 # 大分类
 
