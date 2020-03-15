@@ -1,49 +1,148 @@
+
+
 # mengsBlog
-> This is my blog for summary
 
-# 大分类
+> This is my study summary
 
-## [深入理解JAVA](AboutJava.md)
+[toc]
 
-## [设计模式](DesignPattern.md)
+笔记工具：Typora书写+Git管理更新
 
-## [Linux相关](AboutLinux.md)
+系统：Surface安装Ubuntu+Windows双系统
 
-## [刷题Tips](Algorithm.md)
+# 快捷键查询
+
+## Git
+
+参考：[廖雪峰Git教程](https://www.liaoxuefeng.com/wiki/896043488029600/896827951938304)
+
+原理简述:
+
+1. 工作区，暂存区和仓库：先添加(add)到暂存区；把暂存区内容全部提交(commit)到当前分支
+
+2. 版本控制指针：HEAD为版本指向指针，能用于撤回版本等操作
+3. 分支管理：
+   1. Fast forward模式：指针指向，快速合并分支，删除分支后会丢失被删除分支的信息
+   2. --no-ff模式： 会创建一个commit，删除后能查找到分支的历史
+
+### 更新提交操作
+
+1. git status : 查看当前仓库状态
+2. git add A : 添加文件A
+3. git add . ：添加所有文件
+4. git commit -m "message" ： 提交到本地仓库
+5. git push ： 提交到远程服务器上
+
+### 撤销操作
+
+1. git checkout -- file : 丢弃当前修改（未添加到暂存区的部分）
+2. git reset HEAD file :  把暂存区的内容撤回到工作区，HEAD表示最新版本
+3. commit后的撤销，即回退版本操作
+
+### 分支管理
+
+1. 创建并切换分支：git checkout -b <name>  / git swithc -c <name> 
+2. 创建并切换分支：
+   1. git branch <name> 
+   2. git checkout  <name> 
+3. 查看当前分支：git branch
+4. 合并指定分支到当前分支：
+   1. 合并：git merge <name> 
+   2. 无ff模式：git merge --no-ff -m "message" <name> 
+5. 删除分支：git branch -d <name> 
+6. 查看分支合并图：git log --graph --pretty=oneline --abbrev-commit
+7. 强行删除一个未合并的分支：git branch -D <name>
+
+### 远程仓库
+
+1. 查看远程库信息：git remote (-v)
+2. 推送分支(远程 本地): git push origin <name> 
+3. 从远程origin/dev上，创建本地dev分支：
+   1. git checkout -b dev origin/dev
+   2. git push origin dev
+4. 提交远程发生冲突：先pull拉取远程分支，本地解决冲突，再push推送到远程仓库
+
+## Linux
+
+复制文件：
+
+> cp /home/a.tar.gz /usr/local/lib
+
+解压压缩包：（z: gzip，v:显示所有过程，x:解压，f:必须有，放置最后，使用档案名称的意思，即后面接文件名称）
+
+> tar -zvxf jdk.tar.gz
+
+编辑文件：
+
+> vim a.txt
+
+重启电脑：（关机是-h，停机halt的意思；-k不关机，只是对所有在线用户发送警告；-c取消已经在进行的shutdown）
+
+> shutdown -r now 
+
+查看进程：
+
+> ps -l  #查看自己的进程
+>
+> ps aux  #查看系统所有的进程
+>
+> ps aux|grep threadx #查看特定进程
+>
+> pstree -A #查看所有进程树
+
+查看端口占用
+
+> netstat -anp | grep port
+
+## IDEA
+
+删除行
+
+> Ctrl + X
+
+复制行
+
+> Ctrl + D
+
+格式化代码
+
+> Ctrl + Alt + L
+
+生成get/set实现接口
+
+> ALT + INSERT
+
+显示方法参数信息
+
+> Ctrl + P
+
+显示类结构图
+
+> Ctrl + H
+
+导入包自动修正
+
+>  Alt + 回车
+
+
+
+# 应用软件(Ubuntu)
+
+
+
+
+
+
+
+
+
+# 其余链接
+
+## [环境准备](Preparation.md)
+
+[Java](AboutJava.md) [设计模式](DesignPattern.md) [Linux相关](AboutLinux.md) [刷题Tips](Algorithm.md)
 
 ![Be happy~](pictures/happy.jpg)
-
-# 点滴感想
-2019-4-24
-昨天从HK回来了。
-
-今天看了一篇保持体重的分享，觉得很不错，打算实践一番。
-
-它的理念是找到一种你**能一直保持/坚持的方式**才最实在。
-
-或许不止是体重，生活作息，学习习惯都是如此。
-然后就是往山上走那样，**往上走就是了**。
-
-2019-4-12
-
-虽然纠结了会儿，但还是去了学院就业实习办公室准备的面试培训，庆幸去了，收获很多，对自己也更有信心了。
-
-**正确地认识自己**
-
-差点都要忘记了自己最大的优点，就是心态很稳啊！
-
-2019-4-11：
-- 今天下午去TW参观了一下，感触很深。
-- 晚上做了微众的笔试，编程题又跪了，确实是又有几天没刷了，每次都是一不小心就没保存**刷题的状态**了
-- 感觉目前在积累和实践的东西有点分散，有种顾不来的感觉
-- 计划--每天在这里更新一天所得，做自己的**输出和总结**。
-
-------------------------------
-2019-3-31：我现在研二，这个三月面了两三个面试，投的是后台方向，都没有过，感觉还有不少差距。
-
-
->- 目前最主要的是广度的知识的获取。
->- 编程习惯的养成（毕设要怎么踏实地做？）
 
 
 
