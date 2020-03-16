@@ -1,10 +1,6 @@
+其余链接：[环境准备](Preparation.md)  [SpringBoot](SpringBoot.md) [Java8](Java8.md)
 
-
-# mengsBlog
-
-> This is my study summary
-
-[toc]
+[TOC]
 
 笔记工具：Typora书写+Git管理更新
 
@@ -136,9 +132,7 @@
 
 
 
-# 其余链接
 
-## [环境准备](Preparation.md)
 
 [Java](AboutJava.md) [设计模式](DesignPattern.md) [Linux相关](AboutLinux.md) [刷题Tips](Algorithm.md)
 
