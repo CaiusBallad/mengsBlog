@@ -1,10 +1,10 @@
-其余链接：[环境准备](Preparation.md)  [SpringBoot](SpringBoot.md) [Java8](Java8.md)
+其余链接：[环境准备](Preparation.md)     [SpringBoot](SpringBoot.md)     [Java8](Java8.md)     [Mybatis整合](SpringBoot-Mybatis)
 
 [TOC]
 
 笔记工具：Typora书写+Git管理更新
 
-系统：Surface安装Ubuntu+Windows双系统
+系统：Surface安装Ubuntu+Windows双系统 
 
 # 快捷键查询
 
@@ -122,19 +122,13 @@
 
 
 
-# 应用软件(Ubuntu)
+# 
 
 
 
 
 
 
-
-
-
-
-
-[Java](AboutJava.md) [设计模式](DesignPattern.md) [Linux相关](AboutLinux.md) [刷题Tips](Algorithm.md)
 
 ![Be happy~](pictures/happy.jpg)
 

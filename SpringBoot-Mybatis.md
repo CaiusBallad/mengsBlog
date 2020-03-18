@@ -4,7 +4,7 @@
 
 # 新建数据表
 
-创建一个users表，并插入示例数据：
+创建一个users表，并插入示例数据
 
 ![image-20200318113534325](/home/long/.config/Typora/typora-user-images/image-20200318113534325.png)
 
