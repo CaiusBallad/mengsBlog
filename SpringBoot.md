@@ -51,7 +51,15 @@ DI可以讲多个独立的Java类粘合起来，同时又保持他们的独立�
 - 编程式事务管理：借助编程来管理事务
 - 声明式事务管理：将事务管理与业务代码分开，只能使用注解和XML配置来管理事务
 
-（Spring通过SpringAOP框架支持声明式事务管理）
+
+
+SpringBoot中使用@Transactional开启事务，指定方法中的操作要么都成功，要么都回滚。
+
+需要注意的是：
+
+1. @Transactional注解只能用在public方法上，其余的不会起作用
+2. 默认情况，Spring会对unchecked异常（空指针）进行事务回滚，如果是checked异常（文件读写，网络问题）则不回滚
+3. 数据库的引擎需要支持事务
 
 # 常用注解
 
@@ -111,7 +119,7 @@ DI可以讲多个独立的Java类粘合起来，同时又保持他们的独立�
 - Advice增强/建言：定位到方法后要做的事情，如事务，日志等
 - Aspect切面：切点+建言
 
-通过注解：
+通过注解实现：
 
 - @Aspect声明切面类，放在类上面
 - 建言类型：@Around,@Before,@After,@AfterReturing,@AfterThrowing
@@ -120,7 +128,7 @@ DI可以讲多个独立的Java类粘合起来，同时又保持他们的独立�
   - execution(* com.zdy.Dog.*(..)): Dog类下的所有方法.
 - @Pointcut
 
-通过XML配置
+通过XML配置实现
 
 优先级问题：一个切面中的多个增强，不同切面的多个增强
 
@@ -131,3 +139,68 @@ DI可以讲多个独立的Java类粘合起来，同时又保持他们的独立�
 > 不同的Aspect中的多个增强。根据Aspect实现Ordered接口，方法getOrder返回值有关，返回值越低,优先级越高。
 >
 > 链接：https://juejin.im/post/5a56cdf06fb9a01cbe6539d2
+
+# 缓存
+
+框架中可以使用不同的缓存技术，可以不使用第三方的缓存依赖，使用Spring的ConcurrenMapCacheManager作为缓存管理器。
+
+@EnableCaching开启缓存技术，放在Application上；然后在需要缓存的方法上加入@Cacheable注解
+
+# 异步编程
+
+@EnableAsync开启异步任务，放在Application上。
+
+@Async放在具体方法上，表面是一个异步任务
+
+需要继承AsyncConfigurerSupport接口来进行相关配置，如设置线程池大小等。
+
+如果不开启异步，多个请求都在Main线程池里面进行
+
+# 日志
+
+默认使用Logback来生成日志，使用INFO输出到控制台。
+
+# Swagger
+
+Swagger是一个api框架，能提供在线文档查阅和在线文档测试。
+
+需要引入依赖，新建一个配置类，并在类上开启@EnableSwagger2，指定包来生成文档。
+
+具体的接口描述通过@Api，@ApiOperation等来标注
+
+
+
+# 邮件服务
+
+在pom中添加依赖：spring-boot-starter-mail
+
+在application.properties中添加邮箱配置
+
+1. 可通过实现MailService接口来发送邮件：简单消息，HTML邮件，带附件的邮件，带图片的邮件
+2. 邮件系统：固定模板，其中能存在能改变的参数；发送失败的处理方式
+
+# 定时任务
+
+启动类上添加@EnableScheduling，然后在具体实现上使用@Scheduled注解
+
+- cron="*/6****?"
+- fixedRate = 6000
+
+以上2种都表示每隔6秒运行一次
+
+
+
+# 整合Docker
+
+需要做的内容包括：
+
+1. 创建Dockerfile文件
+2. 在pom中添加docker插件
+3. 使用maven命令打包
+   1. mvn clean
+   2. mvn package docker:build
+4. 构建完毕后可以查看镜像：docker images
+5. 启动镜像：docker run -p 8080:8080 -t <image>
+
+
+
