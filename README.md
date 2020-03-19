@@ -58,6 +58,20 @@
    2. git push origin dev
 4. 提交远程发生冲突：先pull拉取远程分支，本地解决冲突，再push推送到远程仓库
 
+### 应用：如何把Github的项目上传到Gitlab上
+
+从Git原理的学习得知，本地仓库和远程仓库可以通过push和pull连接。
+
+因此目前状况是：本地仓库默认和远程Github仓库连接。
+
+删除和Github的远程分支关联关系：git remote rm origin
+
+添加Gitlab的ssh连接（在Gitlab上新建一个空项目）：git remote add origin
+
+查看远程分支：git remote -v
+
+上传本地项目到远程Gitlab：git push --set-upstream origin master
+
 ## Linux
 
 复制文件：

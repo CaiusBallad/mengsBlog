@@ -42,7 +42,7 @@ DI可以讲多个独立的Java类粘合起来，同时又保持他们的独立�
 - byType
 - constructor
 
-## 事务管理
+# 事务管理
 
 事务的四个属性：原子性，一致性，隔离和永久性。
 
@@ -60,6 +60,21 @@ SpringBoot中使用@Transactional开启事务，指定方法中的操作要么�
 1. @Transactional注解只能用在public方法上，其余的不会起作用
 2. 默认情况，Spring会对unchecked异常（空指针）进行事务回滚，如果是checked异常（文件读写，网络问题）则不回滚
 3. 数据库的引擎需要支持事务
+
+在之前的demo中的Service中选一个方法开启事务：
+
+```java
+@Transactional
+public void changePassword(){
+    userDao.updateUser("333", 4);
+    int errorValue = 1/0;
+    userDao.updateUser("111111", 1);
+}
+```
+
+会发现由于出错，两者都不会对数据库进行操作
+
+
 
 # 常用注解
 
@@ -142,9 +157,35 @@ SpringBoot中使用@Transactional开启事务，指定方法中的操作要么�
 
 # 缓存
 
-框架中可以使用不同的缓存技术，可以不使用第三方的缓存依赖，使用Spring的ConcurrenMapCacheManager作为缓存管理器。
+SpringBoot框架中可以使用不同的缓存技术，同时也可以不使用第三方的缓存依赖，使用Spring的ConcurrenMapCacheManager作为缓存管理器。
+
+使用SpringBoot集成Cache时，需要注册实现CacheManager的Bean。
 
 @EnableCaching开启缓存技术，放在Application上；然后在需要缓存的方法上加入@Cacheable注解
+
+先在pom文件中引入依赖：
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-cache</artifactId>
+</dependency>
+```
+
+在Application函数上添加：@EnableCaching
+
+在查询方法上添加@Cacheable注解：
+
+```java
+@Cacheable("user1")
+public User selectUserById(Integer id){
+    return userXMLDao.findUserById(id);
+}
+```
+
+注解中的“user1”是缓存的值（value）的意思，即调用该方法时，会从“user1”中查找值，而我们传递的参数是key。
+
+修改数据库的值，再查询时，可以发现查询的是缓存中的旧值。
 
 # 异步编程
 
@@ -168,7 +209,87 @@ Swagger是一个api框架，能提供在线文档查阅和在线文档测试。
 
 具体的接口描述通过@Api，@ApiOperation等来标注
 
+先引入依赖：
 
+```xml
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger2</artifactId>
+    <version>2.9.2</version>
+</dependency>
+<dependency>
+    <groupId>io.springfox</groupId>
+    <artifactId>springfox-swagger-ui</artifactId>
+    <version>2.9.2</version>
+</dependency>
+```
+
+然后创建一个配置类：
+
+```java
+@Configuration
+@EnableSwagger2
+public class Swagger2 {
+
+    @Bean
+    public Docket createRestApi(){
+        return new Docket(DocumentationType.SWAGGER_2)
+                //加载配置信息
+                .apiInfo(apiInfo())
+                //设置全局响应参数
+                .select()
+                //加载swagger扫描包
+                .apis(RequestHandlerSelectors.basePackage("com.example.demo"))
+                .paths(PathSelectors.any())
+                .build();
+    }
+    /**
+     * 配置基本的API文档信息
+     * @return
+     */
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder()
+                .title("Demo的API文档")
+                .description("这是一个快速生成的API文档")
+                .build();
+    }
+}
+```
+
+@Configuration表面这是一个配置类，@EnableSwagger2开启Swagger
+
+之后在Controller中的接口上添加描述：
+
+```java
+@ApiOperation(value = "查询用户",notes = "查询单个用户的所有信息")
+@RequestMapping("/query")
+public User query(){
+    return userService.selectUserById(1);
+}
+
+@ApiOperation(value = "创建用户",notes = "创建一个新的用户")
+@ApiImplicitParam(name = "user",value = "用户的详细信息",required = true, dataType = "User")
+@RequestMapping("/insert")
+public List<User> insertUser(){
+    String before ="Before: "+ userService.selectAllUser() + "]";
+    System.out.println(before);
+    userService.insertUser();
+    return userService.selectAllUser();
+}
+```
+
+```java
+@ApiIgnore
+@RequestMapping("delete")
+public List<User> testDelete(){
+    userService.deleteUser(2);
+    return userService.selectAllUser();
+}
+```
+
+还可使用@ApiModel来描述实体，@ApiModelProperty描述属性。
+
+然后访问：http://localhost:8080/swagger-ui.html#/地址即可
 
 # 邮件服务
 
@@ -187,8 +308,6 @@ Swagger是一个api框架，能提供在线文档查阅和在线文档测试。
 - fixedRate = 6000
 
 以上2种都表示每隔6秒运行一次
-
-
 
 # 整合Docker
 
